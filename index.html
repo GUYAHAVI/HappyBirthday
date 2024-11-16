@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday, My Love</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
+ <style>
+  body {
       font-family: 'Georgia', serif;
       background: radial-gradient(circle, #000046, #1cb5e0);
       color: #ffffff;
       text-align: center;
       padding: 20px;
+      overflow: hidden;
     }
 
     .container {
@@ -59,7 +60,6 @@
       transform: translateX(-50%);
       animation: flicker 0.2s infinite ease-in-out;
       opacity: 1;
-      transition: opacity 0.5s, transform 0.5s;
     }
 
     .glow {
@@ -74,15 +74,18 @@
       animation: glow-flicker 0.3s infinite ease-in-out;
     }
 
-    .message {
+    .poem-container {
+      height: 200px; /* Set fixed height */
+      overflow: hidden; /* Hide overflow for scrolling effect */
       margin-top: 20px;
-      font-size: 1.5rem;
-      color: #ff4081;
-      visibility: hidden;
+      position: relative;
     }
 
-    button {
-      margin-top: 20px;
+    .poem {
+      font-size: 1.5rem;
+      color: #ff4081;
+      position: absolute;
+      animation: scroll-up 10s linear infinite; /* Smooth scrolling */
     }
 
     @keyframes flicker {
@@ -102,7 +105,16 @@
         opacity: 0.8;
       }
     }
-  </style>
+
+    @keyframes scroll-up {
+      0% {
+        transform: translateY(100%);
+      }
+      100% {
+        transform: translateY(-100%);
+      }
+    }
+ </style>
 </head>
 <body>
   <div class="container">
