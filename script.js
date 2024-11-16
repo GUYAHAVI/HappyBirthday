@@ -1,6 +1,8 @@
 const flame = document.getElementById('flame');
+const glow = document.querySelector('.glow');
+const message = document.getElementById('message');
 
-// Audio setup for detecting microphone input
+// Audio setup for microphone input
 navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
   const audioContext = new AudioContext();
   const analyser = audioContext.createAnalyser();
@@ -15,19 +17,14 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
     const maxVolume = Math.max(...dataArray);
 
     if (maxVolume > 100) {
-      // Simulate flame shrinking based on blowing strength
-      const blowStrength = Math.min(maxVolume / 128, 1); // Normalize to a maximum of 1
-      flame.style.opacity = 1 - blowStrength; // Reduce opacity
-      flame.style.transform = `translateX(-50%) scale(${1 - blowStrength})`;
-
-      // If strong enough, "extinguish" the flame
+      const blowStrength = Math.min(maxVolume / 128, 1); // Normalize to max of 1
+      flame.style.opacity = 1 - blowStrength; // Shrink flame opacity
+      glow.style.opacity = 1 - blowStrength; // Shrink glow
       if (blowStrength > 0.8) {
-        flame.style.opacity = 0;
+        flame.style.opacity = 0; // Extinguish flame
+        glow.style.opacity = 0;
+        message.style.visibility = 'visible'; // Show the romantic message
       }
-    } else {
-      // Reset flame when there's no blowing
-      flame.style.opacity = 1;
-      flame.style.transform = 'translateX(-50%) scale(1)';
     }
 
     requestAnimationFrame(detectBlow);
